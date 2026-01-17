@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Audio Analysis POC
 
-## Getting Started
+Een Next.js proof-of-concept applicatie voor het analyseren van audio bestanden (MP3/WAV) met geavanceerde muziekanalyse functies.
 
-First, run the development server:
+## Features
 
+- **BPM Detectie**: Automatische detectie van het tempo (beats per minute)
+- **Key Detectie**: Detectie van de toonsoort met Camelot Wheel notatie
+- **Downbeat Detectie**: Identificatie van de eerste beat van elke maat
+- **Waveform Visualisatie**: Visuele weergave van de waveform met frequentie-analyse
+  - Kleurgecodeerd op basis van frequentiebanden:
+    - Rood: Lage frequenties (0-250 Hz)
+    - Groen: Midden frequenties (250-4kHz)
+    - Blauw: Hoge frequenties (4kHz+)
+  - Helderheid gebaseerd op RMS (Root Mean Square) waarde
+- **Beatgrid Visualisatie**: Grafische weergave van het beatgrid met downbeats gemarkeerd
+
+## Tech Stack
+
+- **Next.js 16** - React framework
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS 4** - Styling
+- **essentia.js** - Audio analysis library
+- **meyda** - Audio feature extraction
+
+## Installatie
+
+1. Clone de repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd poc-analyse-music-2
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Installeer dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Gebruik
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Start de development server:
+```bash
+npm run dev
+```
 
-## Learn More
+2. Open [http://localhost:3000](http://localhost:3000) in je browser
 
-To learn more about Next.js, take a look at the following resources:
+3. Upload een MP3 of WAV bestand via de file input
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. De applicatie analyseert het bestand automatisch en toont:
+   - BPM waarde
+   - Toonsoort (key) met Camelot notatie
+   - Waveform visualisatie met frequentie-analyse
+   - Beatgrid met gemarkeerde downbeats
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structuur
 
-## Deploy on Vercel
+```
+app/
+  ├── Analyzer.tsx          # Hoofdcomponent voor audio analyse
+  ├── FileInput.tsx         # Audio decodering en analyse functies
+  ├── WaveformCanvas.tsx    # Canvas component voor waveform rendering
+  ├── Waveform.tsx          # Waveform component
+  ├── Beatgrid.tsx        # Beatgrid component
+  ├── page.tsx             # Homepage
+  └── layout.tsx           # Root layout
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Beschikbare Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` - Start development server
+- `npm run build` - Build voor productie
+- `npm run start` - Start productie server
+- `npm run lint` - Run ESLint
+
+## Functionaliteiten in Detail
+
+### Audio Decodering
+De applicatie decodeert MP3 en WAV bestanden naar AudioBuffer voor verdere analyse.
+
+### BPM Detectie
+Detecteert automatisch het tempo van het nummer in beats per minute.
+
+### Key Detectie
+Identificeert de toonsoort en geeft deze weer in standaard notatie (bijv. "C major") en Camelot Wheel notatie (bijv. "8B").
+
+### Waveform Analyse
+Genereert een visuele waveform waarbij:
+- Elke segment een kleur heeft gebaseerd op de dominante frequentieband
+- De amplitude gebaseerd is op de RMS waarde (helderheid)
+
+### Beatgrid
+Visualiseert het beatgrid met:
+- Blauwe lijnen voor downbeats (elke 4e beat)
+- Grijze lijnen voor reguliere beats
+- Tijdslabels op downbeats
+
+## Licentie
+
+Dit project is een proof-of-concept en is privé.
